@@ -3,6 +3,14 @@ package com.example.android.politicalpreparedness.election
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.android.politicalpreparedness.database.ElectionDatabase
+import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
+import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.repository.ElectionRepository
 
 class VoterInfoFragment : Fragment() {
 
@@ -10,20 +18,43 @@ class VoterInfoFragment : Fragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        //TODO: Add ViewModel values and create ViewModel
+        val database = ElectionDatabase.getInstance(requireActivity().application)
+        val repository = ElectionRepository(database)
 
-        //TODO: Add binding values
+        val viewModelFactory = ElectionsViewModelFactory(repository)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
 
-        //TODO: Populate voter info -- hide views without provided data.
-        /**
-        Hint: You will need to ensure proper data is provided from previous fragment.
-        */
+        val binding = FragmentElectionBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
 
+        val upcomingElectionListAdapter = ElectionListAdapter(ElectionListener { election ->
+            viewModel.navigateToVoterInfoAbout(election)
+        })
+        binding.upcomingElectionList.adapter = upcomingElectionListAdapter
+        viewModel.upcomingElections.observe(viewLifecycleOwner, Observer { electionList ->
+            electionList?.let {
+                upcomingElectionListAdapter.submitList(electionList)
+            }
+        })
 
-        //TODO: Handle loading of URLs
+        val savedElectionListAdapter = ElectionListAdapter(ElectionListener { election ->
+            viewModel.navigateToVoterInfoAbout(election)
+        })
+        binding.savedElectionList.adapter = savedElectionListAdapter
+        viewModel.savedElections.observe(viewLifecycleOwner, Observer { electionList ->
+            electionList?.let {
+                savedElectionListAdapter.submitList(electionList)
+            }
+        })
 
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
+        viewModel.navigateToVoterInfo.observe(viewLifecycleOwner, Observer { election ->
+            election?.let {
+                findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election, election.division))
+                viewModel.navigationToVoterInfoDone()
+            }
+        })
+
+        return binding.root
 
     }
 

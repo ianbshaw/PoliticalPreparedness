@@ -4,15 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/launchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add image for home screen logo. -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@drawable/ballot_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.469"
+            tools:layout_editor_absoluteX="-16dp">
 
-        <!-- TODO: Add Button to navigate to upcoming elections. -->
+        </ImageView>
 
-        <!-- TODO: Add Button to navigate to representatives. -->
+        <TextView
+            android:id="@+id/upcomingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/upcoming_elections_button_text"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/text_margin"
+            android:background="@color/colorAccent"
+            android:padding="@dimen/text_padding"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            tools:text="@string/upcoming_elections_button_text"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/representativeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_marginStart="16dp"
+            android:background="@color/colorAccent"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/text_padding"
+            android:text="@string/find_representatives_button_text"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upcomingButton"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="@string/find_representatives_button_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

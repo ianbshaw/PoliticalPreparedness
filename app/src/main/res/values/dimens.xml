@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="default_padding">8dp</dimen>
+    <dimen name="text_padding">10dp</dimen>
+    <dimen name="text_margin">20dp</dimen>
+    <dimen name="button_text_size">15sp</dimen>
 
     <!-- TODO: Add necessary dimension values -->s
 

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Political Preparedness</string>
+    <string name="upcoming_elections_button_text">UPCOMING ELECTIONS</string>
+    <string name="find_representatives_button_text">FIND MY REPRESENTATIVES</string>
+    <string name="upcoming_elections">Upcoming Elections</string>
+    <string name="saved_elections">Saved Elections</string>
+    <string name="office">Office</string>
+    <string name="officials_name">Name</string>
+    <string name="officials_party">Party</string>
 
     <!-- TODO: Add necessary string values -->
 
