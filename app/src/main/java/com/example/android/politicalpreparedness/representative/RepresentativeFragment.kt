@@ -48,7 +48,7 @@ class DetailFragment : Fragment() {
         }
 
         binding.buttonSearch.setOnClickListener {
-            viewModel.onSearchMyRepresentativesClicked()
+          //  viewModel.onSearchMyRepresentativesClicked()
         }
 
         binding.state.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

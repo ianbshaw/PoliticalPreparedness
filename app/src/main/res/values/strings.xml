@@ -8,7 +8,7 @@
     <string name="office">Office</string>
     <string name="officials_name">Name</string>
     <string name="officials_party">Party</string>
-
-    <!-- TODO: Add necessary string values -->
+    <string name="find_my_representatives">Find My Representatives</string>
+    <string name="use_my_location">Use My Location</string>
 
 </resources>
