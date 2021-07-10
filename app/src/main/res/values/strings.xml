@@ -10,5 +10,11 @@
     <string name="officials_party">Party</string>
     <string name="find_my_representatives">Find My Representatives</string>
     <string name="use_my_location">Use My Location</string>
+    <string name="representative_search">Representative Search</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="my_representatives">My Representatives</string>
+    <string name="zip">Zip</string>
+    <string name="city">City</string>
 
 </resources>

@@ -4,7 +4,6 @@
     <dimen name="text_padding">10dp</dimen>
     <dimen name="text_margin">20dp</dimen>
     <dimen name="button_text_size">15sp</dimen>
-
-    <!-- TODO: Add necessary dimension values -->s
+    <dimen name="label_text_size">30sp</dimen>
 
 </resources>
