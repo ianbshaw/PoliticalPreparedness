@@ -16,9 +16,6 @@ import com.example.android.politicalpreparedness.repository.ElectionRepository
 
 class ElectionsFragment: Fragment() {
 
-    private lateinit var viewModelFactory: ElectionsViewModelFactory
-    private lateinit var viewModel: ElectionsViewModel
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -26,8 +23,8 @@ class ElectionsFragment: Fragment() {
         val database = ElectionDatabase.getInstance(requireActivity().application)
         val repository = ElectionRepository(database)
 
-        viewModelFactory = ElectionsViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
+        val viewModelFactory = ElectionsViewModelFactory(repository)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
 
         val binding = FragmentElectionBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
@@ -60,8 +57,6 @@ class ElectionsFragment: Fragment() {
                 viewModel.navigationToVoterInfoDone()
             }
         })
-
         return binding.root
-
     }
 }

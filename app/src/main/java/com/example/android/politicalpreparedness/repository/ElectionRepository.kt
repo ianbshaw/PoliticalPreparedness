@@ -8,7 +8,7 @@ import com.example.android.politicalpreparedness.network.models.Election
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ElectionRepository(private val database: ElectionDatabase) {
+class ElectionRepository(database: ElectionDatabase) {
     val upcomingElections = MutableLiveData<List<Election>>()
     val savedElections: LiveData<List<Election>> = database.electionDao.getElections()
 
