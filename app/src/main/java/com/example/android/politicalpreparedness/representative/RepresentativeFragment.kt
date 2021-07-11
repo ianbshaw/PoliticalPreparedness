@@ -99,12 +99,8 @@ class DetailFragment : Fragment() {
                 }
             }
         } else {
-            requestFineLocationPermission()
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
         }
-    }
-
-    private fun requestFineLocationPermission() {
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
     }
 
     private fun geoCodeLocation(location: Location): Address {
