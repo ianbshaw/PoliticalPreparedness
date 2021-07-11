@@ -14,8 +14,13 @@ class ElectionRepository(database: ElectionDatabase) {
 
     suspend fun refreshElections() {
         withContext(Dispatchers.IO) {
-            val electionResponse = CivicsApi.retrofitService.getElections()
-            upcomingElections.postValue(electionResponse.elections)
+            try {
+
+                val electionResponse = CivicsApi.retrofitService.getElections()
+                upcomingElections.postValue(electionResponse.elections)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 

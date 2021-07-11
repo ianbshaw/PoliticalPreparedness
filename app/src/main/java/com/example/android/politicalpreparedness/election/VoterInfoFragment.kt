@@ -1,16 +1,17 @@
 package com.example.android.politicalpreparedness.election
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
-import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
-import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
-import com.example.android.politicalpreparedness.election.adapter.ElectionListener
-import com.example.android.politicalpreparedness.repository.ElectionRepository
+import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.repository.VoterInfoRepository
 
 class VoterInfoFragment : Fragment() {
 
@@ -18,46 +19,66 @@ class VoterInfoFragment : Fragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        val args = navArgs<VoterInfoFragmentArgs>()
+        val election = args.value.argElection
+
         val database = ElectionDatabase.getInstance(requireActivity().application)
-        val repository = ElectionRepository(database)
+        val repository = VoterInfoRepository(database)
 
-        val viewModelFactory = ElectionsViewModelFactory(repository)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
+        val viewModelFactory = VoterInfoViewModelFactory(repository, election)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
 
-        val binding = FragmentElectionBinding.inflate(inflater, container, false)
+        val binding = FragmentVoterInfoBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        val upcomingElectionListAdapter = ElectionListAdapter(ElectionListener { election ->
-            viewModel.navigateToVoterInfoAbout(election)
-        })
-        binding.upcomingElectionList.adapter = upcomingElectionListAdapter
-        viewModel.upcomingElections.observe(viewLifecycleOwner, Observer { electionList ->
-            electionList?.let {
-                upcomingElectionListAdapter.submitList(electionList)
+        //TODO: Populate voter info -- hide views without provided data.
+        /**
+        Hint: You will need to ensure proper data is provided from previous fragment.
+         */
+
+
+        viewModel.electionInfoUrl.observe(viewLifecycleOwner, Observer { urlStr ->
+            urlStr?.let {
+                startActivityWithUrlIntentUsing(urlStr)
+                viewModel.openElectionInfoUrlDone()
             }
         })
 
-        val savedElectionListAdapter = ElectionListAdapter(ElectionListener { election ->
-            viewModel.navigateToVoterInfoAbout(election)
-        })
-        binding.savedElectionList.adapter = savedElectionListAdapter
-        viewModel.savedElections.observe(viewLifecycleOwner, Observer { electionList ->
-            electionList?.let {
-                savedElectionListAdapter.submitList(electionList)
+        viewModel.votingLocationFinderUrl.observe(viewLifecycleOwner, Observer { urlStr ->
+            urlStr?.let {
+                startActivityWithUrlIntentUsing(urlStr)
+                viewModel.openVotingLocationFinderUrlDone()
             }
         })
 
-        viewModel.navigateToVoterInfo.observe(viewLifecycleOwner, Observer { election ->
-            election?.let {
-                findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election, election.division))
-                viewModel.navigationToVoterInfoDone()
+        viewModel.ballotInfoUrl.observe(viewLifecycleOwner, Observer { urlStr ->
+            urlStr?.let {
+                startActivityWithUrlIntentUsing(urlStr)
+                viewModel.openBallotInfoUrlDone()
+            }
+        })
+
+
+        viewModel.savedElection.observe(viewLifecycleOwner, Observer {
+            binding.followElectionButton.visibility = View.VISIBLE
+            when (it == null) {
+                true -> {
+                    binding.followElectionButton.text = getString(R.string.follow_election_button_text)
+                }
+                false -> {
+                    binding.followElectionButton.text = getString(R.string.unfollow_election_button_text)
+                }
             }
         })
 
         return binding.root
-
     }
 
-    //TODO: Create method to load URL intents
+    private fun startActivityWithUrlIntentUsing(urlStr: String) {
+        val uri: Uri = Uri.parse(urlStr)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
 
 }
