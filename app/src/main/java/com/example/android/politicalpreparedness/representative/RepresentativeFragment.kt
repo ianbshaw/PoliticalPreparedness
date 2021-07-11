@@ -104,7 +104,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun requestFineLocationPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
     }
 
     private fun geoCodeLocation(location: Location): Address {
